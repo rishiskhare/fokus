@@ -27,10 +27,6 @@ const Timer = () => {
   const isPausedRef = useRef(isPaused);
   const modeRef = useRef(mode);
 
-  const initTimer = () => {
-    setSecondsLeft(workMinutes * 60);
-  };
-
   const switchMode = () => {
     let nextMode = "work";
     if (modeRef.current === "work") {
@@ -43,40 +39,17 @@ const Timer = () => {
     secondsLeftRef.current = seconds;
   };
 
-  const getCache = (key) => {
-    return localStorage.getItem(key);
-  }
-
-  const setCache = (key, value) => {
-    localStorage.setItem(key, value);
-  }
-
   useEffect(() => {
-    let cacheTime = getCache("start");
-    let userTimeAllow = getCache("userAllow");
-    console.log(cacheTime, userTimeAllow, getCache("paused"))
-    if (cacheTime === null) {
-      setCache("start", Date.now());
-      setCache("userAllow", 20);
-      setCache("paused", [false, Date.now()]);
-      initTimer();
-    } else {
-      let pauz = getCache("paused");
-      let timeElapsed;
-      if (pauz[0]) {
-        timeElapsed = pauz[1] - cacheTime;
-      } else {
-        timeElapsed = Date.now() - cacheTime;
-      }
-      setSecondsLeft((userTimeAllow - timeElapsed> 0) ? timeElapsed: 0);
+    const prevSecondsLeft = window.localStorage.getItem("TIMER_SECONDSLEFT");
+    if (prevSecondsLeft !== null) {
+      secondsLeftRef.current = JSON.parse(prevSecondsLeft);
+      setSecondsLeft(JSON.parse(prevSecondsLeft));
     }
+
     const interval = setInterval(() => {
       if (isPausedRef.current) {
-        if (getCache("paused") === null) {
-          setCache("paused", [true, Date.now()]);
-        }
         return;
-      } else if (secondsLeftRef.current === 0 || !getCache("userAllow")) {
+      } else if (secondsLeftRef.current === 0) {
         return switchMode();
       } else {
         secondsLeftRef.current -= 1;
@@ -85,6 +58,13 @@ const Timer = () => {
     }, 1000);
     return () => clearInterval(interval);
   }, []);
+
+  useEffect(() => {
+    window.localStorage.setItem(
+      "TIMER_SECONDSLEFT",
+      JSON.stringify(secondsLeft)
+    );
+  }, [secondsLeft]);
 
   const percentage = Math.round(
     (100 * secondsLeft) / getTotalSecondsGivenMode(mode)
@@ -96,12 +76,9 @@ const Timer = () => {
   }
 
   const shouldPauseTimer = (pause) => {
-    console.log(pause);
     pause = pause === "pause";
     setIsPaused(pause);
-    setCache("paused", [pause, Date.now()]);
     isPausedRef.current = pause;
-    console.log(getCache("paused"))
   };
 
   return (
