@@ -14,14 +14,12 @@ const Header = () => {
         setAuthor(json.person);
       } catch (error) {}
     };
-
     fetchData();
   }, []);
-
   return (
     <div>
       <div className="logo_container">
-        <img src={logo} className="logo_img" />
+        <img id="logg" src={logo} className="logo_img"/>
         <h1 className="logo_text">Fokus</h1>
       </div>
       <h2 className="quote_text">{'"' + quote + '"'}</h2>

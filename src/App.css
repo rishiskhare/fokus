@@ -52,4 +52,12 @@ main {
   display: flex;
   align-items: center;
   justify-content: center;
+  justify-items: center;
+  align-content: center;
+}
+
+#logg{
+  display: flex;
+  align-self: center;
+  transform: translateY(-20%);
 }
