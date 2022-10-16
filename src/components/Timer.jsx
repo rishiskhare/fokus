@@ -43,19 +43,40 @@ const Timer = () => {
     secondsLeftRef.current = seconds;
   };
 
+  const getCache = (key) => {
+    return localStorage.getItem(key);
+  }
+
+  const setCache = (key, value) => {
+    localStorage.setItem(key, value);
+  }
+
   useEffect(() => {
-    let cacheTime = Window.localStorage.getItem("start");
-    let userTimeAllow = Window.localStorage.getItem("userAllow");
+    let cacheTime = getCache("start");
+    let userTimeAllow = getCache("userAllow");
+    console.log(cacheTime, userTimeAllow, getCache("paused"))
     if (cacheTime === null) {
-      Window.localStorage.setItem("start", Date.now());
-      Window.localStorage.setItem("userAllow", 20);
+      setCache("start", Date.now());
+      setCache("userAllow", 20);
+      setCache("paused", [false, Date.now()]);
+      initTimer();
     } else {
+      let pauz = getCache("paused");
+      let timeElapsed;
+      if (pauz[0]) {
+        timeElapsed = pauz[1] - cacheTime;
+      } else {
+        timeElapsed = Date.now() - cacheTime;
+      }
+      setSecondsLeft((userTimeAllow - timeElapsed> 0) ? timeElapsed: 0);
     }
-    initTimer();
     const interval = setInterval(() => {
       if (isPausedRef.current) {
+        if (getCache("paused") === null) {
+          setCache("paused", [true, Date.now()]);
+        }
         return;
-      } else if (secondsLeftRef.current === 0) {
+      } else if (secondsLeftRef.current === 0 || !getCache("userAllow")) {
         return switchMode();
       } else {
         secondsLeftRef.current -= 1;
@@ -75,9 +96,12 @@ const Timer = () => {
   }
 
   const shouldPauseTimer = (pause) => {
+    console.log(pause);
     pause = pause === "pause";
     setIsPaused(pause);
+    setCache("paused", [pause, Date.now()]);
     isPausedRef.current = pause;
+    console.log(getCache("paused"))
   };
 
   return (
