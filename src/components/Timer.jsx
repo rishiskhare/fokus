@@ -44,6 +44,13 @@ const Timer = () => {
   };
 
   useEffect(() => {
+    let cacheTime = Window.localStorage.getItem("start");
+    let userTimeAllow = Window.localStorage.getItem("userAllow");
+    if (cacheTime === null) {
+      Window.localStorage.setItem("start", Date.now());
+      Window.localStorage.setItem("userAllow", 20);
+    } else {
+    }
     initTimer();
     const interval = setInterval(() => {
       if (isPausedRef.current) {
