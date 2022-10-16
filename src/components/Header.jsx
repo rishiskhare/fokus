@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import logo from "../logo.png";
 
 const Header = () => {
   const [quote, setQuote] = useState("");
@@ -19,7 +20,10 @@ const Header = () => {
 
   return (
     <div>
-      <h1>Fokus</h1>
+      <div className="logo_container">
+        <img src={logo} className="logo_img" />
+        <h1 className="logo_text">Fokus</h1>
+      </div>
       <h2 className="quote_text">{'"' + quote + '"'}</h2>
       <h2 className="quote_author">{"—" + author}</h2>
     </div>

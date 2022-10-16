@@ -38,14 +38,27 @@ const Timer = () => {
     const seconds = getTotalSecondsGivenMode(nextMode);
     setSecondsLeft(seconds);
     secondsLeftRef.current = seconds;
+    window.localStorage.setItem("TIMER_MODE", JSON.stringify(modeRef.current));
   };
 
   useEffect(() => {
     const prevIsPaused = window.localStorage.getItem("TIMER_ISPAUSED");
     const prevSecondsLeft = window.localStorage.getItem("TIMER_SECONDSLEFT");
     const prevStartTime = window.localStorage.getItem("TIMER_STARTTIME");
+    const prevMode = window.localStorage.getItem("TIMER_MODE");
 
-    if (prevIsPaused !== null) {
+    if (!prevMode) {
+      window.localStorage.setItem("TIMER_MODE", JSON.stringify(mode));
+    } else {
+      modeRef.current = JSON.parse(prevMode);
+      setMode(modeRef.current);
+      window.localStorage.setItem(
+        "TIMER_MODE",
+        JSON.stringify(modeRef.current)
+      );
+    }
+
+    if (prevIsPaused) {
       isPausedRef.current = JSON.parse(prevIsPaused);
       setIsPaused(isPausedRef.current);
     }
@@ -53,13 +66,13 @@ const Timer = () => {
     if (isPausedRef.current) {
       // If paused, get seconds left from local storage
 
-      if (prevSecondsLeft !== null) {
+      if (prevSecondsLeft) {
         secondsLeftRef.current = JSON.parse(prevSecondsLeft);
         setSecondsLeft(secondsLeftRef.current);
       }
     } else {
       // Else if active, get start time from local storage
-      if (prevStartTime !== null) {
+      if (prevStartTime) {
         setStartTime(JSON.parse(prevStartTime));
         let seconds =
           secondsLeftRef.current -
@@ -69,7 +82,7 @@ const Timer = () => {
           secondsLeftRef.current = seconds;
           setSecondsLeft(seconds);
         } else {
-          let currMode = "work";
+          let currMode = modeRef.current;
           while (seconds < 0) {
             currMode = "break" ? "work" : "break";
             if (currMode === "break") {
@@ -80,6 +93,10 @@ const Timer = () => {
           }
           setMode(currMode);
           modeRef.current = currMode;
+          window.localStorage.setItem(
+            "TIMER_MODE",
+            JSON.stringify(modeRef.current)
+          );
         }
       } else {
         setStartTime(Date.now());
@@ -95,7 +112,7 @@ const Timer = () => {
         secondsLeftRef.current -= 1;
         return setSecondsLeft(secondsLeftRef.current);
       }
-    }, 10);
+    }, 1000);
     return () => clearInterval(interval);
   }, []);
 
