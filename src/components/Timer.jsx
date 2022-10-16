@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import Button from "react-bootstrap/Button";
 
 const orange = "#FFA500";
+const blue = "#3D81EF";
 
 const Timer = () => {
   const getTotalSecondsGivenMode = (mode) => {
@@ -80,7 +81,7 @@ const Timer = () => {
           text={minutesText + ":" + secondsText}
           styles={buildStyles({
             textColor: "#212427",
-            pathColor: orange,
+            pathColor: mode === "work" ? orange : blue,
           })}
         />
       </div>
