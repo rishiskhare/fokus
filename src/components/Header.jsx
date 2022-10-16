@@ -19,7 +19,7 @@ const Header = () => {
 
   return (
     <div>
-      <h1>Fokus!!</h1>
+      <h1>Fokus</h1>
       <h2 className="quote_text">{'"' + quote + '"'}</h2>
       <h2 className="quote_author">{"—" + author}</h2>
     </div>
