@@ -6,7 +6,7 @@ Fokus is a Chrome extension for studying, focusing, and productivity. As studiou
 
 In the late 1980s Francesco Cirillo developed a time management method known as the Pomodoro Technique in which a kitchen timer is used to break work into intervals of around 20-25 minutes in length, separated by short breaks. Therefore, one of the main features of our extension is the Pomodoro timer.
 
-Another feature we have included is an editable to-do list - students can add, change, or delete any homework assignments as they please.
+Another feature we have included is an editable to-do list - students can add, change, or delete any homework assignments, quizzes, and/or exams as they please.
 
 There is also a new inspirational quote featured everyday!
 
