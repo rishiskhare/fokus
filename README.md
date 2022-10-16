@@ -6,8 +6,18 @@ Fokus is a Chrome extension for studying, focusing, and productivity. As studiou
 
 The extension features a Pomodoro timer as well as a to-do list (keep track of which assignments you need to do). There is also a new inspirational quote featured everyday!
 
+## Meet the Team
 
-## Getting Started with Create React App
+Created by:
+Rishi Khare
+Mukhamediyar Kudaikulove
+Grace Qian
+
+
+
+### Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
+
 
