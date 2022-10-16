@@ -22,7 +22,7 @@ const Header = ({ toggleView }) => {
       <div className="logo_container">
         <img id="logg" src={logo} className="logo_img" />
         <h1 className="logo_text">Fokus</h1>
-        <Button onClick={toggleView}>Switch View</Button>
+        <Button onClick={toggleView} className="switchh" style={{right: "5px"}}>Switch View</Button>
       </div>
       <h2 className="quote_text">{'"' + quote + '"'}</h2>
       <h2 className="quote_author">{"—" + author}</h2>
