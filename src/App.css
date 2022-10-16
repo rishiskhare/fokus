@@ -46,7 +46,6 @@ main {
 .logo_text {
   margin-left: 8px;
   font-size: 24px;
-  margin-right: 30px;
   transform: translateY(10%);
 }
 
@@ -67,4 +66,9 @@ main {
 .switchh {
   justify-self: right;
   right: 5px;
+}
+
+button {
+  margin-left: 30px;
+  margin-right: 0px;
 }
