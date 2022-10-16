@@ -75,7 +75,7 @@ const Timer = () => {
         secondsLeftRef.current =
           secondsLeftRef.current -
           Math.floor((Date.now() - prevStartTime) / 1000);
-        setSecondsLeft(secondsLeft.current);
+        setSecondsLeft(secondsLeftRef.current);
       } else {
         console.log("else");
         setStartTime(Date.now());
