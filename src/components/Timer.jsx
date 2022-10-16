@@ -40,44 +40,48 @@ const Timer = () => {
     secondsLeftRef.current = seconds;
   };
 
-  console.log("sec" + secondsLeft);
-  if (secondsLeft == undefined || secondsLeft === NaN) {
-    console.log("BINGBONG");
-  }
-
   useEffect(() => {
     const prevIsPaused = window.localStorage.getItem("TIMER_ISPAUSED");
     const prevSecondsLeft = window.localStorage.getItem("TIMER_SECONDSLEFT");
     const prevStartTime = window.localStorage.getItem("TIMER_STARTTIME");
 
     if (prevIsPaused !== null) {
-      console.log("prevIsPaused !== null");
       isPausedRef.current = JSON.parse(prevIsPaused);
       setIsPaused(isPausedRef.current);
     }
 
     if (isPausedRef.current) {
-      console.log("isPausedRef.current");
       // If paused, get seconds left from local storage
 
       if (prevSecondsLeft !== null) {
-        console.log("prevSecondsLeft !== null");
         secondsLeftRef.current = JSON.parse(prevSecondsLeft);
         setSecondsLeft(secondsLeftRef.current);
       }
     } else {
       // Else if active, get start time from local storage
-      console.log("else if");
-
       if (prevStartTime !== null) {
-        console.log("prevStartTime !== null");
         setStartTime(JSON.parse(prevStartTime));
-        secondsLeftRef.current =
+        let seconds =
           secondsLeftRef.current -
           Math.floor((Date.now() - prevStartTime) / 1000);
-        setSecondsLeft(secondsLeftRef.current);
+
+        if (seconds >= 0) {
+          secondsLeftRef.current = seconds;
+          setSecondsLeft(seconds);
+        } else {
+          let currMode = "work";
+          while (seconds < 0) {
+            currMode = "break" ? "work" : "break";
+            if (currMode === "break") {
+              seconds += breakMinutes * 60;
+            } else {
+              seconds += workMinutes * 60;
+            }
+          }
+          setMode(currMode);
+          modeRef.current = currMode;
+        }
       } else {
-        console.log("else");
         setStartTime(Date.now());
       }
     }
@@ -91,7 +95,7 @@ const Timer = () => {
         secondsLeftRef.current -= 1;
         return setSecondsLeft(secondsLeftRef.current);
       }
-    }, 1000);
+    }, 10);
     return () => clearInterval(interval);
   }, []);
 
