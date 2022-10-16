@@ -1,6 +1,7 @@
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import { useState, useEffect, useRef } from "react";
+import Button from "react-bootstrap/Button";
 
 const orange = "#FFA500";
 
@@ -47,10 +48,10 @@ const Timer = () => {
       if (isPausedRef.current) {
         return;
       } else if (secondsLeftRef.current === 0) {
-        switchMode();
+        return switchMode();
       } else {
         secondsLeftRef.current -= 1;
-        setSecondsLeft(secondsLeftRef.current);
+        return setSecondsLeft(secondsLeftRef.current);
       }
     }, 1000);
     return () => clearInterval(interval);
@@ -65,6 +66,12 @@ const Timer = () => {
     secondsText = "0" + secondsText;
   }
 
+  const shouldPauseTimer = (pause) => {
+    pause = pause === "pause";
+    setIsPaused(pause);
+    isPausedRef.current = pause;
+  };
+
   return (
     <div>
       <CircularProgressbar
@@ -75,7 +82,19 @@ const Timer = () => {
           pathColor: orange,
         })}
       />
-      <div>{isPaused ? <button>Play</button> : <button>Pause</button>}</div>
+      <div>
+        {isPaused ? (
+          <Button
+            onClick={() => {
+              shouldPauseTimer("play");
+            }}
+          >
+            Play
+          </Button>
+        ) : (
+          <Button onClick={() => shouldPauseTimer("pause")}>Pause</Button>
+        )}
+      </div>
     </div>
   );
 };
