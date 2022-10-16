@@ -9,8 +9,11 @@ The extension features a Pomodoro timer as well as a to-do list (keep track of w
 ## Meet the Team
 
 Created by:
+
 Rishi Khare
+
 Mukhamediyar Kudaikulove
+
 Grace Qian
 
 
