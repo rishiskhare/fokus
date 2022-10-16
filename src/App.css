@@ -3,8 +3,38 @@ body {
 }
 
 main {
-  padding-top: 50px;
-  max-width: 340px;
+  padding-top: 16px;
+  max-width: 360px;
   margin: 0 auto;
   text-align: center;
+}
+
+.quote_text,
+.quote_author {
+  font-family: "Source Serif Pro", serif;
+}
+
+.quote_text {
+  margin-top: 16px;
+  font-size: 20px;
+}
+
+.quote_author {
+  font-size: 16px;
+}
+
+.timer_container {
+  margin: 0 auto;
+}
+
+.timer_circle {
+  margin-top: 16px;
+  margin-bottom: 16px;
+  max-width: 200px;
+  max-height: 200px;
+  margin: 16px auto;
+}
+
+.play_pause_btn {
+  margin-bottom: 16px;
 }

@@ -74,17 +74,20 @@ const Timer = () => {
 
   return (
     <div>
-      <CircularProgressbar
-        value={percentage}
-        text={minutesText + ":" + secondsText}
-        styles={buildStyles({
-          textColor: "#212427",
-          pathColor: orange,
-        })}
-      />
+      <div className="timer_circle">
+        <CircularProgressbar
+          value={percentage}
+          text={minutesText + ":" + secondsText}
+          styles={buildStyles({
+            textColor: "#212427",
+            pathColor: orange,
+          })}
+        />
+      </div>
       <div>
         {isPaused ? (
           <Button
+            className="play_pause_btn"
             onClick={() => {
               shouldPauseTimer("play");
             }}
@@ -92,7 +95,12 @@ const Timer = () => {
             Play
           </Button>
         ) : (
-          <Button onClick={() => shouldPauseTimer("pause")}>Pause</Button>
+          <Button
+            className="play_pause_btn"
+            onClick={() => shouldPauseTimer("pause")}
+          >
+            Pause
+          </Button>
         )}
       </div>
     </div>
